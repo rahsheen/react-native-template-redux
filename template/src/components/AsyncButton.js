@@ -1,33 +1,15 @@
 import React, { useRef } from 'react';
-import {
-  Animated,
-  GestureResponderEvent,
-  Pressable,
-  PressableProps,
-  StyleSheet,
-  View,
-  ViewStyle,
-  LogBox,
-} from 'react-native';
+import { Animated, Pressable, StyleSheet, View, LogBox } from 'react-native';
 
 // Ignore warnings from built-in Animated components that hate StrictMode
 LogBox.ignoreLogs([/Animated/]);
-
-export function AsyncButton({
-  onPress,
-  style,
-  children,
-  ...restProps
-}: PressableProps) {
+export function AsyncButton({ onPress, style, children, ...restProps }) {
   const progress = useRef(new Animated.Value(0)).current;
   const opacity = useRef(new Animated.Value(1)).current;
-
-  const _onPress = (e: GestureResponderEvent) => {
+  const _onPress = e => {
     progress.setValue(0);
     opacity.setValue(1);
-
     onPress?.(e);
-
     Animated.sequence([
       Animated.timing(progress, {
         toValue: 1,
@@ -41,18 +23,15 @@ export function AsyncButton({
       }),
     ]).start();
   };
-
   const progressInterpolate = progress.interpolate({
     inputRange: [0, 1],
     outputRange: ['0%', '100%'],
     extrapolate: 'clamp',
   });
-
-  const progressStyle: Animated.WithAnimatedObject<ViewStyle> = {
+  const progressStyle = {
     width: progressInterpolate,
     opacity,
   };
-
   return (
     <Pressable style={style} onPress={_onPress} {...restProps}>
       <>
@@ -64,7 +43,6 @@ export function AsyncButton({
     </Pressable>
   );
 }
-
 const styles = StyleSheet.create({
   progress: {
     position: 'absolute',

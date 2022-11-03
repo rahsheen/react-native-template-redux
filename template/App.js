@@ -2,8 +2,8 @@
  * Sample React Native App
  * https://github.com/facebook/react-native
  *
- * Generated with the Redux TypeScript template
- * https://github.com/rahsheen/react-native-template-redux-typescript
+ * Generated with the Redux template
+ * https://github.com/rahsheen/react-native-template-redux
  *
  * @format
  */
@@ -16,8 +16,8 @@ import {
   View,
   Text,
   StatusBar,
+  useColorScheme,
 } from 'react-native';
-
 import {
   LearnMoreLinks,
   Colors,
@@ -27,24 +27,35 @@ import {
 import LearnReduxLinks from './src/components/LearnReduxLinks';
 import Header from './src/components/Header';
 import { Counter } from './src/features/counter/Counter';
-
-declare const global: { HermesInternal: null | {} };
-
 const App = () => {
+  const isDarkMode = useColorScheme();
+
+  const backgroundStyle = {
+    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  };
+
   return (
     <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
+      <StatusBar
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        backgroundColor={backgroundStyle.backgroundColor}
+      />
+      <SafeAreaView styles={backgroundStyle}>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
+          style={backgroundStyle}
+        >
           <Header />
           {global.HermesInternal == null ? null : (
             <View style={styles.engine}>
               <Text style={styles.footer}>Engine: Hermes</Text>
             </View>
           )}
-          <View style={styles.body}>
+          <View
+            style={{
+              backgroundColor: isDarkMode ? Colors.black : Colors.white,
+            }}
+          >
             <Counter />
             <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>Step One</Text>
@@ -85,7 +96,6 @@ const App = () => {
     </>
   );
 };
-
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: Colors.lighter,
@@ -96,6 +106,7 @@ const styles = StyleSheet.create({
   },
   body: {
     backgroundColor: Colors.white,
+    color: Colors.black,
   },
   sectionContainer: {
     marginTop: 32,
@@ -124,5 +135,4 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
 });
-
 export default App;

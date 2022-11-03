@@ -12,10 +12,8 @@
 
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-// @ts-ignore
 import openURLInBrowser from 'react-native/Libraries/Core/Devtools/openURLInBrowser';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-
 const links = [
   {
     title: 'React',
@@ -39,7 +37,6 @@ const links = [
     description: 'Official React bindings for Redux',
   },
 ];
-
 const LinkList = () => (
   <View style={styles.container}>
     {links.map((item, index) => {
@@ -49,7 +46,8 @@ const LinkList = () => (
           <TouchableOpacity
             accessibilityRole={'button'}
             onPress={() => openURLInBrowser(item.link)}
-            style={styles.linkContainer}>
+            style={styles.linkContainer}
+          >
             <Text style={styles.link}>{item.title}</Text>
             <Text style={styles.description}>{item.description}</Text>
           </TouchableOpacity>
@@ -58,7 +56,6 @@ const LinkList = () => (
     })}
   </View>
 );
-
 const styles = StyleSheet.create({
   container: {
     marginTop: 32,
@@ -89,5 +86,4 @@ const styles = StyleSheet.create({
     height: 1,
   },
 });
-
 export default LinkList;
